@@ -3,7 +3,7 @@ typedef struct ll_node {
     struct ll_node *next;
 } ll_node;
 
-typedef linked_list {
+typedef struct linked_list {
     ll_node *head;
 } linked_list;
 
@@ -17,6 +17,7 @@ void ll_add(linked_list *l, int value) {
 void ll_delete(linked_list *l, int index) {
     if (index == 0) {
         l->head = l->head->next;
+        return;
     }
 
     ll_node *curr = l->head;
@@ -43,6 +44,15 @@ int ll_search(linked_list *l, int value) {
     return -1;
 }
 
-void init(linked_list *l) {
+void ll_print(linked_list *l) {
+    ll_node *curr = l->head;
+    while (curr) {
+        printf("%d -> ", curr->value);
+        curr = curr->next;
+    }
+    printf("NULL\n");
+}
+
+void ll_init(linked_list *l) {
     l->head = NULL;
 }

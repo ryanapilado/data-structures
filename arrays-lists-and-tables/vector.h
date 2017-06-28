@@ -31,6 +31,7 @@ void vector_print(vector *v) {
     for (i = 0; i < v->n; i++) {
         printf("%d ", v->array[i]);
     }
+    printf("\n");
 }
 
 void vector_init(vector *v, int capacity) {
