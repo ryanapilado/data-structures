@@ -42,13 +42,13 @@ int mod_hash(hash_table *h, int value) {
 }
 
 hash_table *ht_init(int size) {
-    hash_table *h = malloc(sizeof(hash_table));
+    hash_table *h = safe_malloc(sizeof(hash_table));
     h->size = size;
     h->hash_function = mod_hash;
-    h->table = malloc(sizeof(void *) * size);
+    h->table = safe_malloc(sizeof(void *) * size);
     int i;
     for (i = 0; i < size; i++) {
-        h->table[i] = malloc(sizeof(linked_list));
+        h->table[i] = safe_malloc(sizeof(linked_list));
         ll_init(h->table[i]);
     }
     return h;

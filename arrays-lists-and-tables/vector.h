@@ -1,6 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include "../utils.h"
+
 typedef struct {
     int *array;
     int n;
@@ -9,7 +11,7 @@ typedef struct {
 
 void vector_add(vector *v, int value) {
     if (v->n == v->capacity) {
-        int *new_array = malloc(sizeof(int) * v->capacity * 2);
+        int *new_array = safe_malloc(sizeof(int) * v->capacity * 2);
         int i;
         for (i = 0; i < v->capacity; i++) {
             new_array[i] = v->array[i];
@@ -38,10 +40,10 @@ void vector_print(vector *v) {
 }
 
 vector *vector_init(int capacity) {
-    vector *v = malloc(sizeof(vector));
+    vector *v = safe_malloc(sizeof(vector));
     v->n = 0;
     v->capacity = capacity;
-    v->array = malloc(sizeof(int) * capacity);
+    v->array = safe_malloc(sizeof(int) * capacity);
     return v;
 }
 

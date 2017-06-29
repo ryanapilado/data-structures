@@ -11,7 +11,7 @@ typedef struct linked_list {
 } linked_list;
 
 void ll_add(linked_list *l, int value) {
-    ll_node *new_node = malloc(sizeof(ll_node));
+    ll_node *new_node = safe_malloc(sizeof(ll_node));
     new_node->value = value;
     new_node->next = l->head;
     l->head = new_node;
@@ -85,7 +85,7 @@ void ll_print(linked_list *l) {
 }
 
 linked_list *ll_init() {
-    linked_list *l = malloc(sizeof(linked_list));
+    linked_list *l = safe_malloc(sizeof(linked_list));
     l->head = NULL;
     return l;
 }
