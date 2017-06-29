@@ -84,8 +84,21 @@ void ll_print(linked_list *l) {
     printf("NULL\n");
 }
 
-void ll_init(linked_list *l) {
+linked_list *ll_init() {
+    linked_list *l = malloc(sizeof(linked_list));
     l->head = NULL;
+    return l;
+}
+
+void ll_destroy(linked_list *l) {
+    ll_node *curr = l->head;
+    ll_node *temp;
+    while (curr) {
+        temp = curr;
+        curr = curr->next;
+        free(temp);
+    }
+    free(l);
 }
 
 #endif

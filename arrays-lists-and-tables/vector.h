@@ -37,10 +37,17 @@ void vector_print(vector *v) {
     printf("\n");
 }
 
-void vector_init(vector *v, int capacity) {
+vector *vector_init(int capacity) {
+    vector *v = malloc(sizeof(vector));
     v->n = 0;
     v->capacity = capacity;
     v->array = malloc(sizeof(int) * capacity);
+    return v;
+}
+
+void vector_destroy(vector *v) {
+    free(v->array);
+    free(v);
 }
 
 #endif
