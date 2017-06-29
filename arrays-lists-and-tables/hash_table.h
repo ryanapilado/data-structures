@@ -4,30 +4,26 @@
 #include "../utils.h"
 #include "linked_list.h"
 
+/* Implementation of a hash table with collision resolution by chaining.
+    Keys must be an integer. Keys are hashed by mod.
+*/
+
 typedef struct hash_table {
     int size;
-    int (*hash_function)(struct hash_table *h, int value);
+    int (*hash_function)(struct hash_table *h, int key);
     linked_list **table;
 } hash_table;
 
-/* Insert value into table. If value already in table, do nothing.
-*/
-void ht_insert(hash_table *h, int value) {
-    ll_add(h->table[ h->hash_function(h, value) ], value);
+void ht_insert(hash_table *h, int key, void *value) {
+    ll_add(h->table[ h->hash_function(h, key) ], key, value);
 }
 
-/* Search for the value in the table and return the index of the linked_list
-    list in which it is stored. If value is not in the table, return -1.
-*/
-int ht_search(hash_table *h, int value) {
-    return ll_search(h->table[ h->hash_function(h, value) ], value);
+int ht_search(hash_table *h, int key) {
+    return ll_search(h->table[ h->hash_function(h, key) ], key);
 }
 
-/* Delete the value from the table, if it does not exist in the table,
-    do nothing.
-*/
-void ht_delete(hash_table *h, int value) {
-    ll_delete_value(h->table[ h->hash_function(h, value) ], value);
+void ht_delete(hash_table *h, int key) {
+    ll_delete_key(h->table[ h->hash_function(h, key) ], key);
 }
 
 void ht_print(hash_table *h) {
@@ -38,8 +34,8 @@ void ht_print(hash_table *h) {
     }
 }
 
-int mod_hash(hash_table *h, int value) {
-    return value % h->size;
+int mod_hash(hash_table *h, int key) {
+    return key % h->size;
 }
 
 hash_table *ht_init(int size) {

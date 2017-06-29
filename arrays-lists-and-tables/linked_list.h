@@ -3,8 +3,13 @@
 
 #include "../utils.h"
 
+/* A linked list implementation. Each node can store a key, which must be an int, and
+    a value as a void pointer.
+*/
+
 typedef struct ll_node {
-    int value;
+    int key;
+    void *value;
     struct ll_node *next;
 } ll_node;
 
@@ -12,8 +17,9 @@ typedef struct linked_list {
     ll_node *head;
 } linked_list;
 
-void ll_add(linked_list *l, int value) {
+void ll_add(linked_list *l, int key, void *value) {
     ll_node *new_node = safe_malloc(sizeof(ll_node));
+    new_node->key = key;
     new_node->value = value;
     new_node->next = l->head;
     l->head = new_node;
@@ -37,38 +43,37 @@ void ll_delete(linked_list *l, int index) {
 
 }
 
-/* Delete the first occurence of value in the list.
-*/
-void ll_delete_value(linked_list *l, int value) {
+int ll_delete_key(linked_list *l, int key) {
     ll_node *curr = l->head;
+    int ndeleted = 0;
 
     // case where no nodes are in list
     if (!curr) {
-        return;
+        return ndeleted;
     }
 
-    // case where value to be deleted is first in list
-    if (curr->value == value) {
+    // case where key to be deleted is first in list
+    if (curr->key == key) {
         l->head = curr->next;
-        return;
+        ndeleted++;
     }
 
     while (curr->next) {
-        if (curr->next->value == value) {
+        if (curr->next->key == key) {
             curr->next = curr->next->next;
+            ndeleted++;
         }
         curr = curr->next;
     }
+
+    return ndeleted;
 }
 
-/* Check if value exists in the list and return its index if it does,
-    otherwise return -1;
-*/
-int ll_search(linked_list *l, int value) {
+int ll_search(linked_list *l, int key) {
     ll_node *curr = l->head;
     int i = 0;
     while (curr) {
-        if (curr->value == value) {
+        if (curr->key == key) {
             return i;
         }
         i++;
@@ -80,7 +85,7 @@ int ll_search(linked_list *l, int value) {
 void ll_print(linked_list *l) {
     ll_node *curr = l->head;
     while (curr) {
-        printf("%d -> ", curr->value);
+        printf("%d -> ", curr->key);
         curr = curr->next;
     }
     printf("NULL\n");
