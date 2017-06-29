@@ -5,7 +5,7 @@
 #include "linked_list.h"
 
 /* Implementation of a hash table with collision resolution by chaining.
-    Keys must be an integer. Keys are hashed by mod.
+    Keys must be a string.
 */
 
 typedef struct hash_table {
@@ -15,15 +15,21 @@ typedef struct hash_table {
 } hash_table;
 
 void ht_insert(hash_table *h, char *key, void *value) {
-    ll_add(h->table[ h->hash_function(h, key) ], key, value);
+    linked_list *l = h->table[ h->hash_function(h, key)];
+    if (ll_search(l, key) != -1) {
+        ll_delete_key(l, key);
+    }
+    ll_add(l, key, value);
 }
 
 int ht_search(hash_table *h, char *key) {
-    return ll_search(h->table[ h->hash_function(h, key) ], key);
+    linked_list *l = h->table[ h->hash_function(h, key)];
+    return ll_search(l, key);
 }
 
 void ht_delete(hash_table *h, char *key) {
-    ll_delete_key(h->table[ h->hash_function(h, key) ], key);
+    linked_list *l = h->table[ h->hash_function(h, key)];
+    ll_delete_key(l, key);
 }
 
 void ht_print(hash_table *h) {
