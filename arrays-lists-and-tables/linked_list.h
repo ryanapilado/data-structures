@@ -1,3 +1,6 @@
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H 
+
 typedef struct ll_node {
     int value;
     struct ll_node *next;
@@ -32,6 +35,33 @@ void ll_delete(linked_list *l, int index) {
 
 }
 
+/* Delete the first occurence of value in the list.
+*/
+void ll_delete_value(linked_list *l, int value) {
+    ll_node *curr = l->head;
+
+    // case where no nodes are in list
+    if (!curr) {
+        return;
+    }
+
+    // case where value to be deleted is first in list
+    if (curr->value == value) {
+        l->head = curr->next;
+        return;
+    }
+
+    while (curr->next) {
+        if (curr->next->value == value) {
+            curr->next = curr->next->next;
+        }
+        curr = curr->next;
+    }
+}
+
+/* Check if value exists in the list and return its index if it does,
+    otherwise return -1;
+*/
 int ll_search(linked_list *l, int value) {
     ll_node *curr = l->head;
     int i = 0;
@@ -40,6 +70,7 @@ int ll_search(linked_list *l, int value) {
             return i;
         }
         i++;
+        curr = curr->next;
     }
     return -1;
 }
@@ -56,3 +87,5 @@ void ll_print(linked_list *l) {
 void ll_init(linked_list *l) {
     l->head = NULL;
 }
+
+#endif

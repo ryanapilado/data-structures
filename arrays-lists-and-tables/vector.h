@@ -1,3 +1,6 @@
+#ifndef VECTOR_H
+#define VECTOR_H
+
 typedef struct {
     int *array;
     int n;
@@ -39,3 +42,5 @@ void vector_init(vector *v, int capacity) {
     v->capacity = capacity;
     v->array = malloc(sizeof(int) * capacity);
 }
+
+#endif
