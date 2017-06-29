@@ -1,5 +1,7 @@
 #ifndef LINKED_LIST_H
-#define LINKED_LIST_H 
+#define LINKED_LIST_H
+
+#include "../utils.h"
 
 typedef struct ll_node {
     int value;

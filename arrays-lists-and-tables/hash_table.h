@@ -1,6 +1,7 @@
 #ifndef HASH_TABLE_H
 #define HASH_TABLE_H
 
+#include "../utils.h"
 #include "linked_list.h"
 
 typedef struct hash_table {
