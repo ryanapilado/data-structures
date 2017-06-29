@@ -2,13 +2,14 @@
 #define LINKED_LIST_H
 
 #include "../utils.h"
+#include <string.h>
 
 /* A linked list implementation. Each node can store a key, which must be an int, and
     a value as a void pointer.
 */
 
 typedef struct ll_node {
-    int key;
+    char *key;
     void *value;
     struct ll_node *next;
 } ll_node;
@@ -17,9 +18,10 @@ typedef struct linked_list {
     ll_node *head;
 } linked_list;
 
-void ll_add(linked_list *l, int key, void *value) {
+void ll_add(linked_list *l, char *key, void *value) {
     ll_node *new_node = safe_malloc(sizeof(ll_node));
-    new_node->key = key;
+    new_node->key = safe_malloc(sizeof(char) * strlen(key));
+    memcpy(new_node->key, key, strlen(key));
     new_node->value = value;
     new_node->next = l->head;
     l->head = new_node;
@@ -43,7 +45,7 @@ void ll_delete(linked_list *l, int index) {
 
 }
 
-int ll_delete_key(linked_list *l, int key) {
+int ll_delete_key(linked_list *l, char *key) {
     ll_node *curr = l->head;
     int ndeleted = 0;
 
@@ -53,13 +55,13 @@ int ll_delete_key(linked_list *l, int key) {
     }
 
     // case where key to be deleted is first in list
-    if (curr->key == key) {
+    if (strcmp(curr->key, key) == 0) {
         l->head = curr->next;
         ndeleted++;
     }
 
     while (curr->next) {
-        if (curr->next->key == key) {
+        if (strcmp(curr->next->key, key) == 0) {
             curr->next = curr->next->next;
             ndeleted++;
         }
@@ -69,11 +71,11 @@ int ll_delete_key(linked_list *l, int key) {
     return ndeleted;
 }
 
-int ll_search(linked_list *l, int key) {
+int ll_search(linked_list *l, char *key) {
     ll_node *curr = l->head;
     int i = 0;
     while (curr) {
-        if (curr->key == key) {
+        if (strcmp(curr->key, key) == 0) {
             return i;
         }
         i++;
@@ -85,7 +87,7 @@ int ll_search(linked_list *l, int key) {
 void ll_print(linked_list *l) {
     ll_node *curr = l->head;
     while (curr) {
-        printf("%d -> ", curr->key);
+        printf("%s -> ", curr->key);
         curr = curr->next;
     }
     printf("NULL\n");
@@ -103,6 +105,7 @@ void ll_destroy(linked_list *l) {
     while (curr) {
         temp = curr;
         curr = curr->next;
+        free(temp->key);
         free(temp);
     }
     free(l);

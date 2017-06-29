@@ -10,19 +10,19 @@
 
 typedef struct hash_table {
     int size;
-    int (*hash_function)(struct hash_table *h, int key);
+    int (*hash_function)(struct hash_table *h, char *key);
     linked_list **table;
 } hash_table;
 
-void ht_insert(hash_table *h, int key, void *value) {
+void ht_insert(hash_table *h, char *key, void *value) {
     ll_add(h->table[ h->hash_function(h, key) ], key, value);
 }
 
-int ht_search(hash_table *h, int key) {
+int ht_search(hash_table *h, char *key) {
     return ll_search(h->table[ h->hash_function(h, key) ], key);
 }
 
-void ht_delete(hash_table *h, int key) {
+void ht_delete(hash_table *h, char *key) {
     ll_delete_key(h->table[ h->hash_function(h, key) ], key);
 }
 
@@ -34,8 +34,18 @@ void ht_print(hash_table *h) {
     }
 }
 
-int mod_hash(hash_table *h, int key) {
-    return key % h->size;
+int ascii_sum(char *s) {
+    int len = strlen(s);
+    int sum = 0;
+    int i = 0;
+    for (i = 0; i < len; i++) {
+        sum += s[i];
+    }
+    return sum;
+}
+
+int mod_hash(hash_table *h, char *key) {
+    return ascii_sum(key) % h->size;
 }
 
 hash_table *ht_init(int size) {
