@@ -14,22 +14,22 @@ typedef struct hash_table {
     linked_list **table;
 } hash_table;
 
-void ht_insert(hash_table *h, char *key, void *value) {
+int ht_insert(hash_table *h, char *key, void *value) {
     linked_list *l = h->table[ h->hash_function(h, key)];
-    if (ll_search(l, key) != -1) {
+    if (ll_search(l, key)) {
         ll_delete_key(l, key);
     }
-    ll_add(l, key, value);
+    return ll_add(l, key, value);
 }
 
-int ht_search(hash_table *h, char *key) {
+char *ht_search(hash_table *h, char *key) {
     linked_list *l = h->table[ h->hash_function(h, key)];
     return ll_search(l, key);
 }
 
-void ht_delete(hash_table *h, char *key) {
+int ht_delete(hash_table *h, char *key) {
     linked_list *l = h->table[ h->hash_function(h, key)];
-    ll_delete_key(l, key);
+    return ll_delete_key(l, key);
 }
 
 void ht_print(hash_table *h) {
@@ -38,6 +38,19 @@ void ht_print(hash_table *h) {
         printf("%d ", i);
         ll_print(h->table[i]);
     }
+}
+
+void ht_print_kv(hash_table *h) {
+    int i;
+    ll_node *curr;
+    for (i = 0; i< h->size; i++) {
+        curr = h->table[i]->head;
+        while (curr) {
+            printf("%s: %s ", curr->key, (char *) curr->value);
+            curr = curr->next;
+        }
+    }
+    printf("\n");
 }
 
 int ascii_sum(char *s) {
@@ -69,7 +82,7 @@ hash_table *ht_init(int size) {
 
 void ht_destroy(hash_table *h) {
     int i;
-    for (i = 0; i < h->size;i ++) {
+    for (i = 0; i < h->size; i++) {
         ll_destroy(h->table[i]);
     }
     free(h->table);
