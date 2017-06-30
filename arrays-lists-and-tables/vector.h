@@ -31,6 +31,12 @@ void v_delete(vector *v, int index) {
     v->n--;
 }
 
+void v_swap(vector *v, int i, int j) {
+    int temp = v->array[i];
+    v->array[i] = v->array[j];
+    v->array[j] = temp;
+}
+
 void v_print(vector *v) {
     int i;
     for (i = 0; i < v->n; i++) {
