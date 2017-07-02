@@ -41,7 +41,7 @@ void heapify(binary_heap *h, int i) {
 void heap_build(binary_heap *h)  {
     vector *v = h->v;
     int i;
-    for (i = v->n / 2 - 1; i >= 0; i++) {
+    for (i = v->n / 2; i > 0; i++) {
         heapify(h, i);
     }
 }

@@ -30,11 +30,7 @@ bst *bst_insert(bst *t, int value) {
 }
 
 bst *bst_search(bst *t, int value) {
-    if (!t) {
-        return NULL;
-    }
-
-    if (t->value == value) {
+    if (!t || t->value == value) {
         return t;
     } else if (t->value > value) {
         return bst_search(t->right, value);
@@ -43,7 +39,29 @@ bst *bst_search(bst *t, int value) {
     }
 }
 
-// delete
+int bst_min(bst *t) {
+    if (!t->left) {
+        return t->value;
+    } else {
+        return bst_min(t->left);
+    }
+}
+
+int bst_max(bst *t) {
+    if (!t->right) {
+        return t->value;
+    } else {
+        return bst_max(t->right);
+    }
+}
+
+//successor
+//predecessor
+
+int bst_delete(bst *t, int value) {
+    return 0;
+}
+
 // print
 
 #endif
