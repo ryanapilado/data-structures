@@ -38,6 +38,11 @@ void v_swap(vector *v, int i, int j) {
 }
 
 void v_print(vector *v) {
+    if (v->n == 0) {
+        printf("EMPTY\n");
+        return;
+    }
+
     int i;
     for (i = 0; i < v->n; i++) {
         printf("%d ", v->array[i]);
