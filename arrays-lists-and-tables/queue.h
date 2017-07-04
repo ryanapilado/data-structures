@@ -8,12 +8,12 @@ typedef struct queue {
     vector *v;
 } queue;
 
-void push(queue *q, int value) {
+void queue_push(queue *q, int value) {
     v_add(q->v, value);
 }
 
-int pop(queue *q) {
-    return q->v[0];
+int queue_pop(queue *q) {
+    return q->v->array[0];
 }
 
 #endif

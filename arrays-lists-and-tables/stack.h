@@ -8,12 +8,12 @@ typedef struct stack {
     vector *v;
 } stack;
 
-void push(stack *s, int value) {
+void stack_push(stack *s, int value) {
     v_add(s->v, value);
 }
 
-int pop(queue *q) {
-    return q->v[q->v->n - 1];
+int stack_pop(stack *q) {
+    return q->v->array[q->v->n - 1];
 }
 
 #endif
