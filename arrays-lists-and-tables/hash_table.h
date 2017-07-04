@@ -74,8 +74,7 @@ hash_table *ht_init(int size) {
     h->table = safe_malloc(sizeof(void *) * size);
     int i;
     for (i = 0; i < size; i++) {
-        h->table[i] = safe_malloc(sizeof(linked_list));
-        ll_init(h->table[i]);
+        h->table[i] = ll_init();
     }
     return h;
 }
